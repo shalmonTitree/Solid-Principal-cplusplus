@@ -1,0 +1,55 @@
+//bad example
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int marks;
+
+    Student(string n, int m) {
+        name = n;
+        marks = m;
+    }
+
+    void printReport() {
+        cout << "Name: " << name << endl;
+        cout << "Marks: " << marks << endl;
+    }
+};
+
+int main() {
+    Student s("Rahul", 90);
+    s.printReport();
+}
+
+
+//good example
+#include <iostream>
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int marks;
+
+    Student(string n, int m) {
+        name = n;
+        marks = m;
+    }
+};
+
+class ReportPrinter {
+public:
+    void print(const Student& s) {
+        cout << "Name: " << s.name << endl;
+        cout << "Marks: " << s.marks << endl;
+    }
+};
+
+int main() {
+    Student s("Rahul", 90);
+
+    ReportPrinter printer;
+    printer.print(s);
+}
