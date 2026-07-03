@@ -1,0 +1,67 @@
+//badexample
+#include <iostream>
+using namespace std;
+
+class Keyboard {
+public:
+    void type() {
+        cout << "Typing using Keyboard\n";
+    }
+};
+
+class Computer {
+    Keyboard keyboard;   // Direct dependency
+public:
+    void work() {
+        keyboard.type();
+    }
+};
+
+int main() {
+    Computer c;
+    c.work();
+}
+
+
+//good example
+#include <iostream>
+using namespace std;
+
+class Keyboard {
+public:
+    virtual void type() = 0;
+};
+
+class WiredKeyboard : public Keyboard {
+public:
+    void type() override {
+        cout << "Typing using Wired Keyboard\n";
+    }
+};
+
+class WirelessKeyboard : public Keyboard {
+public:
+    void type() override {
+        cout << "Typing using Wireless Keyboard\n";
+    }
+};
+
+class Computer {
+    Keyboard* keyboard;
+
+public:
+    Computer(Keyboard* k) {
+        keyboard = k;
+    }
+
+    void work() {
+        keyboard->type();
+    }
+};
+
+int main() {
+    WirelessKeyboard wk;
+    Computer c(&wk);
+
+    c.work();
+}
