@@ -1,0 +1,72 @@
+//bad example
+#include <iostream>
+using namespace std;
+
+class Machine {
+public:
+    virtual void print() = 0;
+    virtual void scan() = 0;
+};
+
+class Printer : public Machine {
+public:
+    void print() override {
+        cout << "Printing...\n";
+    }
+
+    void scan() override {
+        // Printer can't scan!
+        cout << "Not supported\n";
+    }
+};
+
+int main() {
+    Printer p;
+    p.print();
+    p.scan();
+}
+
+
+
+Problem : A Printer only prints, but it is forced to implement scan().
+
+//good example
+#include <iostream>
+using namespace std;
+
+class Printer {
+public:
+    virtual void print() = 0;
+};
+
+class Scanner {
+public:
+    virtual void scan() = 0;
+};
+
+class SimplePrinter : public Printer {
+public:
+    void print() override {
+        cout << "Printing...\n";
+    }
+};
+
+class AllInOnePrinter : public Printer, public Scanner {
+public:
+    void print() override {
+        cout << "Printing...\n";
+    }
+
+    void scan() override {
+        cout << "Scanning...\n";
+    }
+};
+
+int main() {
+    SimplePrinter p;
+    p.print();
+
+    AllInOnePrinter a;
+    a.print();
+    a.scan();
+}
