@@ -1,0 +1,63 @@
+//bad example
+#include <iostream>
+using namespace std;
+
+class Bird {
+public:
+    virtual void fly() {
+        cout << "Bird can fly\n";
+    }
+};
+
+class Penguin : public Bird {
+public:
+    void fly() override {
+        cout << "Penguins can't fly!\n";
+    }
+};
+
+int main() {
+    Bird* b = new Penguin();
+    b->fly();   // Unexpected behavior
+    delete b;
+}
+
+
+//If a function expects any Bird to fly, replacing it with a Penguin breaks the expectation.
+//So, Penguin cannot properly substitute Bird.
+
+#include <iostream>
+using namespace std;
+
+class Bird {
+public:
+    virtual void eat() {
+        cout << "Bird is eating\n";
+    }
+};
+
+class FlyingBird : public Bird {
+public:
+    virtual void fly() {
+        cout << "Flying...\n";
+    }
+};
+
+class Sparrow : public FlyingBird {
+public:
+    void fly() override {
+        cout << "Sparrow is flying\n";
+    }
+};
+
+class Penguin : public Bird {
+    // No fly() because penguins don't fly
+};
+
+int main() {
+    Sparrow s;
+    s.fly();
+
+    Penguin p;
+    p.eat();
+}
